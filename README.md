@@ -7,58 +7,86 @@ sdk: docker
 pinned: false
 ---
 
-# SRE Incident Triage Environment (`sre-incident-triage-env`)
+# 🚨 SRE Incident Triage Environment (`sre-incident-triage-env`)
 
-An OpenEnv environment simulating an on-call SRE triage scenario. The agent acts as an SRE responding to production incidents in a cloud e-commerce platform. It receives alerts, must investigate root causes, prioritize issues, and apply safe mitigations under time pressure.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![OpenEnv](https://img.shields.io/badge/OpenEnv-Compatible-brightgreen.svg)](https://github.com/openenv-project/openenv)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Scenarios
+> An advanced, deterministic **OpenEnv** environment designed for evaluating AI Agents on real-world Site Reliability Engineering (SRE) tasks.
 
-The environment supports 3 difficulty levels:
+## 📖 Overview
 
-1. **Easy (Task 1)**: High CPU alert on a service.
-   - **Goal**: Analyze logs, identify the culprit, and isolate the service.
-   - **Commands**: `ANALYZE_LOGS payment`, `ISOLATE_SERVICE payment-service`
+The **SRE Incident Triage Environment** simulates a high-pressure on-call scenario for a cloud e-commerce platform. AI agents are tasked with receiving production alerts, investigating logs and metrics, identifying root causes, and deploying safe mitigations—all while the system's health decays under simulated time pressure.
 
-2. **Medium (Task 2)**: Database connection pool exhaustion.
-   - **Goal**: Spot stale connections and safely restart the pool.
-   - **Commands**: `CHECK_METRICS db`, `RESTART_POOL db`
+This project was built to provide a **highly realistic, operational task benchmark** for agentic workflows, mirroring the day-to-day challenges faced by SREs at Meta and other top tech companies.
 
-3. **Hard (Task 3)**: Simultaneous memory leak + DDoS-like traffic spike.
-   - **Goal**: Prioritize blocking the DDoS first, then fix the memory leak. Wrong order causes a cascading outage.
-   - **Commands**: `BLOCK_IP_RANGE suspicious`, `ANALYZE_LOGS memory`
+### ✨ Key Features
+- **Deterministic Grading**: Consistent evaluation criteria across multiple agent runs.
+- **Dynamic System Health**: The environment actively decays system health with each step if critical issues are ignored.
+- **Multi-step Reasoning**: Agents must perform diagnostic steps before executing mitigations.
+- **Priority Handling**: Hard scenarios require the agent to prioritize immediate threats (e.g., DDoS) over secondary issues (e.g., Memory Leaks) to prevent cascading failures.
 
-## Actions
+---
 
-The agent interacts with the environment by executing specific commands as strings:
-- `ANALYZE_LOGS [type]`
-- `CHECK_METRICS [component]`
-- `ISOLATE_SERVICE [name]`
-- `RESTART_POOL [db]`
-- `BLOCK_IP_RANGE [range]`
-- `SUBMIT_REPORT`
+## 🎯 Incident Scenarios
 
-## Observations
+The environment supports 3 difficulty levels, randomly assigned or manually forced via the `reset` options:
 
-The environment returns observations containing:
-- `output`: Result of the executed command.
-- `system_health`: Current system health score (0-100). Decays over time if issues are not resolved.
-- `time_used`: Number of steps taken.
-- `alert_summary`: Summary of the active alert.
+1. 🟢 **Easy (Task 1)**: *High CPU Alert*
+   - **Scenario**: A single microservice is experiencing unexplained CPU spikes.
+   - **Optimal Path**: `ANALYZE_LOGS payment` -> `ISOLATE_SERVICE payment-service`
 
-## Running Locally
+2. 🟡 **Medium (Task 2)**: *Database Connection Pool Exhaustion*
+   - **Scenario**: The application is hanging due to stale connections holding the DB hostage.
+   - **Optimal Path**: `CHECK_METRICS db` -> `RESTART_POOL db`
 
-1. Install dependencies:
+3. 🔴 **Hard (Task 3)**: *Cascading Failure (DDoS + Memory Leak)*
+   - **Scenario**: A simultaneous memory leak and suspicious traffic spike are occurring. 
+   - **Optimal Path**: The agent *must* prioritize blocking the traffic (`BLOCK_IP_RANGE suspicious`) before analyzing the memory (`ANALYZE_LOGS memory`). Doing the reverse results in immediate system failure.
+
+---
+
+## 🛠️ API & Agent Interfaces
+
+### Actions
+The agent interacts with the environment by executing specific command strings:
+*   `ANALYZE_LOGS [type]`
+*   `CHECK_METRICS [component]`
+*   `ISOLATE_SERVICE [name]`
+*   `RESTART_POOL [db]`
+*   `BLOCK_IP_RANGE [range]`
+*   `SUBMIT_REPORT`
+
+### Observations
+The environment returns detailed JSON observations to the agent:
+*   `output`: The terminal output/result of the executed command.
+*   `system_health`: Current system health score (0-100%).
+*   `time_used`: Number of steps taken (ticks).
+*   `alert_summary`: High-level summary of the active alert from PagerDuty.
+
+---
+
+## 🚀 Quick Start (Local Setup)
+
+To run the OpenEnv environment locally for agent testing:
+
+1. **Install dependencies:**
    ```bash
-   cd sre_incident_triage
    uv sync
    ```
 
-2. Start the local server:
+2. **Start the FastAPI server:**
    ```bash
    uv run uvicorn server.app:app --port 8000
    ```
+   *Note: The server will host the OpenEnv HTTP interface. A visual API dashboard (Swagger) will be available at `http://127.0.0.1:8000/docs`.*
 
-3. Run the baseline inference script:
+3. **Run the baseline agent test:**
+   In a separate terminal window, run the inference baseline to verify the environment:
    ```bash
    uv run inference.py
    ```
+
+---
+*Built for the Open Source AI Agent Hackathon.*

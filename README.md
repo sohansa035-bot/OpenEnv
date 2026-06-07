@@ -1,3 +1,12 @@
+---
+title: Sre Incident Triage Env
+emoji: 🚨
+colorFrom: red
+colorTo: yellow
+sdk: docker
+pinned: false
+---
+
 # SRE Incident Triage Environment (`sre-incident-triage-env`)
 
 An OpenEnv environment simulating an on-call SRE triage scenario. The agent acts as an SRE responding to production incidents in a cloud e-commerce platform. It receives alerts, must investigate root causes, prioritize issues, and apply safe mitigations under time pressure.

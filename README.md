@@ -9,11 +9,18 @@ pinned: false
 
 # 🚨 OpenEnv — AI Agent Benchmark for SRE Incident Response
 
+[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)]()
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![OpenEnv](https://img.shields.io/badge/OpenEnv-Compatible-brightgreen.svg)](https://github.com/openenv-project/openenv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **OpenEnv is an AI-agent evaluation environment for benchmarking Site Reliability Engineering (SRE) incident response. It enables reproducible testing of autonomous agents using realistic production scenarios, deterministic scoring, and standardized APIs.**
+
+## 💻 Requirements
+
+- Python 3.10+
+- Docker
+- uv
 
 ## 📖 Overview
 
@@ -134,6 +141,21 @@ To run the OpenEnv environment locally for agent testing:
    ```bash
    uv run inference.py
    ```
+
+### Example Agent Run
+
+```bash
+$ uv run inference.py
+
+Scenario: CPU Spike
+Action: ANALYZE_LOGS payment
+✓ Success
+
+Action: ISOLATE_SERVICE payment-service
+✓ Success
+
+Benchmark Score: 94
+```
 
 ---
 

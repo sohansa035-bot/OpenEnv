@@ -1,5 +1,5 @@
 ---
-title: Sre Incident Triage Env
+title: OpenEnv
 emoji: 🚨
 colorFrom: red
 colorTo: yellow
@@ -29,7 +29,7 @@ pinned: false
 
 The **SRE Incident Triage Environment** simulates a high-pressure on-call scenario for a cloud e-commerce platform. AI agents are tasked with receiving production alerts, investigating logs and metrics, identifying root causes, and deploying safe mitigations—all while the system's health decays under simulated time pressure.
 
-This project was built to provide a **highly realistic, operational task benchmark** for agentic workflows, mirroring the day-to-day challenges faced by SREs at Meta and other top tech companies.
+This project was built to provide a **highly realistic, operational task benchmark** for agentic workflows, mirroring real-world production incident response workflows used by large-scale cloud platforms.
 
 ### ✨ Key Features
 - **Deterministic Grading**: Consistent evaluation criteria across multiple agent runs.
@@ -80,7 +80,7 @@ The environment supports 3 difficulty levels, randomly assigned or manually forc
 
 ## 📊 Benchmark Results
 
-*(Illustrative Example)*
+**Example Benchmark Output (Illustrative)**
 
 | Agent | Scenario | Score |
 | :--- | :--- | :--- |
@@ -183,7 +183,7 @@ Benchmark Score: 94
 ## 📁 Project Structure
 
 ```text
-project/
+OpenEnv/
 ├── server/
 ├── assets/
 ├── inference.py
@@ -204,6 +204,10 @@ project/
 - [ ] Multi-agent evaluation
 - [ ] LangGraph integration
 - [ ] Agent leaderboard
+
+---
+
+**Interested in contributing?** See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 

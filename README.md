@@ -10,6 +10,9 @@ pinned: false
 # 🚨 OpenEnv — AI Agent Benchmark for SRE Incident Response
 
 [![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)]()
+[![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)]()
+[![Lint](https://img.shields.io/badge/lint-passing-brightgreen.svg)]()
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![OpenEnv](https://img.shields.io/badge/OpenEnv-Compatible-brightgreen.svg)](https://github.com/openenv-project/openenv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -40,17 +43,18 @@ This project was built to provide a **highly realistic, operational task benchma
 
 ```mermaid
 flowchart TD
-    A[LLM Agent] --> B[REST API]
-    B --> C
-    
-    subgraph Core[OpenEnv Engine]
-    C[Incident Engine]
-    D[Logs]
-    E[Metrics]
-    F[Alerts]
-    end
-    
-    Core --> G[Reward Engine]
+    A[LLM Agent]
+    A --> B[REST API]
+    B --> C[Incident Engine]
+
+    C --> D[Logs]
+    C --> E[Metrics]
+    C --> F[Alerts]
+
+    D --> G[Reward Engine]
+    E --> G
+    F --> G
+
     G --> H[Benchmark Score]
 ```
 

@@ -7,13 +7,13 @@ sdk: docker
 pinned: false
 ---
 
-# 🚨 SRE Incident Triage Environment (`sre-incident-triage-env`)
+# 🚨 OpenEnv — AI Agent Benchmark for SRE Incident Response
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![OpenEnv](https://img.shields.io/badge/OpenEnv-Compatible-brightgreen.svg)](https://github.com/openenv-project/openenv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> An advanced, deterministic **OpenEnv** environment designed for evaluating AI Agents on real-world Site Reliability Engineering (SRE) tasks.
+> **OpenEnv is an AI-agent evaluation environment for benchmarking Site Reliability Engineering (SRE) incident response. It enables reproducible testing of autonomous agents using realistic production scenarios, deterministic scoring, and standardized APIs.**
 
 ## 📖 Overview
 
@@ -31,23 +31,20 @@ This project was built to provide a **highly realistic, operational task benchma
 
 ## 🏗️ Architecture
 
-```text
-LLM Agent
-      │
-      ▼
-OpenEnv API
-      │
- ┌────────────┐
- │ Simulator  │
- │ Logs       │
- │ Metrics    │
- └────────────┘
-      │
-      ▼
-Scoring Engine
-      │
-      ▼
-Benchmark Results
+```mermaid
+flowchart TD
+    A[LLM Agent] --> B[REST API]
+    B --> C
+    
+    subgraph Core[OpenEnv Engine]
+    C[Incident Engine]
+    D[Logs]
+    E[Metrics]
+    F[Alerts]
+    end
+    
+    Core --> G[Reward Engine]
+    G --> H[Benchmark Score]
 ```
 
 ---
@@ -72,6 +69,8 @@ The environment supports 3 difficulty levels, randomly assigned or manually forc
 
 ## 📊 Benchmark Results
 
+*(Illustrative Example)*
+
 | Agent | Scenario | Score |
 | :--- | :--- | :--- |
 | Baseline | CPU Spike | 78 |
@@ -80,6 +79,9 @@ The environment supports 3 difficulty levels, randomly assigned or manually forc
 ---
 
 ## 📸 Screenshots
+
+### Incident Resolution Flow (Demo)
+![Demo GIF](assets/demo.gif)
 
 ### Swagger UI
 ![Swagger UI](assets/swagger_ui.png)
@@ -134,4 +136,57 @@ To run the OpenEnv environment locally for agent testing:
    ```
 
 ---
-*Built for the Open Source AI Agent Hackathon.*
+
+## 🛠️ Engineering Decisions
+
+**Why FastAPI?**
+- Async support
+- Lightweight
+- Easy OpenAPI integration
+
+**Why Docker?**
+- Reproducibility
+- Portable evaluation
+
+**Why deterministic grading?**
+- Fair benchmarking
+- Reproducible experiments
+
+---
+
+## 📁 Project Structure
+
+```text
+project/
+├── server/
+├── assets/
+├── inference.py
+├── models.py
+├── Dockerfile
+├── pyproject.toml
+└── README.md
+```
+
+---
+
+## 🗺️ Roadmap
+
+- [x] REST API
+- [x] Benchmark Engine
+- [x] Docker Support
+- [ ] Kubernetes deployment
+- [ ] Multi-agent evaluation
+- [ ] LangGraph integration
+- [ ] Agent leaderboard
+
+---
+
+### 🤝 Open Source Contribution — OpenEnv
+
+**Role:** Contributor
+
+**Contribution:** Added SRE scenario specifications, deterministic grading scripts, interactive Swagger UI documentation, and benchmark execution logs.
+
+---
+
+[LICENSE](LICENSE) | *Built for the Open Source AI Agent Hackathon.*

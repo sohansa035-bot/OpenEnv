@@ -29,6 +29,29 @@ This project was built to provide a **highly realistic, operational task benchma
 
 ---
 
+## 🏗️ Architecture
+
+```text
+LLM Agent
+      │
+      ▼
+OpenEnv API
+      │
+ ┌────────────┐
+ │ Simulator  │
+ │ Logs       │
+ │ Metrics    │
+ └────────────┘
+      │
+      ▼
+Scoring Engine
+      │
+      ▼
+Benchmark Results
+```
+
+---
+
 ## 🎯 Incident Scenarios
 
 The environment supports 3 difficulty levels, randomly assigned or manually forced via the `reset` options:
@@ -44,6 +67,28 @@ The environment supports 3 difficulty levels, randomly assigned or manually forc
 3. 🔴 **Hard (Task 3)**: *Cascading Failure (DDoS + Memory Leak)*
    - **Scenario**: A simultaneous memory leak and suspicious traffic spike are occurring. 
    - **Optimal Path**: The agent *must* prioritize blocking the traffic (`BLOCK_IP_RANGE suspicious`) before analyzing the memory (`ANALYZE_LOGS memory`). Doing the reverse results in immediate system failure.
+
+---
+
+## 📊 Benchmark Results
+
+| Agent | Scenario | Score |
+| :--- | :--- | :--- |
+| Baseline | CPU Spike | 78 |
+| GPT-4 | CPU Spike | 94 |
+
+---
+
+## 📸 Screenshots
+
+### Swagger UI
+![Swagger UI](assets/swagger_ui.png)
+
+### API Responses
+![API Responses](assets/api_response.png)
+
+### Terminal Execution
+![Terminal Execution](assets/terminal_execution.png)
 
 ---
 
